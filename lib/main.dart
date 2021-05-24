@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'theme.dart';
+import './screen/detail_screen.dart';
 import './screen/shop_screen.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       initialRoute: ShopScreen.routeName,
       routes: {
         ShopScreen.routeName: (_) => ShopScreen(),
+        DetailScreen.routeName: (_) => DetailScreen(),
       },
     );
   }

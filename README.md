@@ -1,8 +1,8 @@
-# jawamart
+## :shopping_cart: Jawamart
 
-A new Flutter project.
+Buy aesthetic clothes from your smartphone
 
-## Getting Started
+### Getting Started
 
 This project is a starting point for a Flutter application.
 
