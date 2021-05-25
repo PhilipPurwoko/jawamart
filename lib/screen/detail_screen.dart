@@ -6,7 +6,7 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Cloth cloth = ModalRoute.of(context).settings.arguments;
+    Cloth cloth = ModalRoute.of(context).settings.arguments as Cloth;
 
     return Scaffold(
       appBar: AppBar(
@@ -60,11 +60,11 @@ class DetailScreen extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: Row(
-                      children: cloth.size
-                          .map((s) => Container(
+                      children: ['S', 'M', 'L', 'XL']
+                          .map((size) => Container(
                                 color: Theme.of(context).highlightColor,
                                 child: Text(
-                                  s.toString().split('.').last,
+                                  size,
                                   style: TextStyle(
                                       color: Theme.of(context).accentColor),
                                 ),
