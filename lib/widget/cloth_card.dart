@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import '../screen/detail_screen.dart';
-import '../model/cloth.dart';
 
 class ClothCard extends StatelessWidget {
-  final Cloth cloth;
-  ClothCard(this.cloth);
+  final String id;
+  final String name;
+  final String imgUrl;
+
+  ClothCard({
+    @required this.id,
+    @required this.name,
+    @required this.imgUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +20,10 @@ class ClothCard extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             Navigator.of(context)
-                .pushNamed(DetailScreen.routeName, arguments: cloth);
+                .pushNamed(DetailScreen.routeName, arguments: id);
           },
           child: Image.network(
-            cloth.imgUrl,
+            imgUrl,
             fit: BoxFit.cover,
           ),
         ),
@@ -26,7 +32,7 @@ class ClothCard extends StatelessWidget {
           leading: Icon(Icons.favorite),
           trailing: Icon(Icons.shopping_cart),
           title: Text(
-            cloth.name,
+            name,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,

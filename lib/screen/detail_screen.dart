@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/clothes_provider.dart';
 import '../model/cloth.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -6,7 +8,11 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Cloth cloth = ModalRoute.of(context).settings.arguments as Cloth;
+    String clothId = ModalRoute.of(context).settings.arguments as String;
+    final ClothesProvider clothesProvider =
+        Provider.of<ClothesProvider>(context);
+    final Cloth cloth =
+        clothesProvider.clothes.firstWhere((Cloth cl) => cl.id == clothId);
 
     return Scaffold(
       appBar: AppBar(
