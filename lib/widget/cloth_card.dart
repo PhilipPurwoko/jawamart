@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../screen/detail_screen.dart';
 import '../provider/clothes_provider.dart';
+import '../provider/cart_provider.dart';
 
 class ClothCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final CartProvider cartProvider =
+        Provider.of<CartProvider>(context, listen: false);
     final Cloth cloth = Provider.of<Cloth>(context, listen: false);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -33,7 +37,9 @@ class ClothCard extends StatelessWidget {
           ),
           trailing: IconButton(
             icon: Icon(Icons.add_shopping_cart),
-            onPressed: () {},
+            onPressed: () {
+              cartProvider.addToCart(cloth.id, cloth.name, cloth.price);
+            },
           ),
           title: Text(
             cloth.name,

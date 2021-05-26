@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'theme.dart';
+
 import './screen/nav_screen.dart';
 import './screen/detail_screen.dart';
 import './screen/shop_screen.dart';
+
+import './provider/cart_provider.dart';
 import './provider/clothes_provider.dart';
 
 void main() {
@@ -17,7 +20,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => ClothesProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CartProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'JawaMart',
