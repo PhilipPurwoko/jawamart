@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'cloth_card.dart';
 import '../provider/clothes_provider.dart';
-import '../model/cloth.dart';
+import '../provider/cloth.dart';
 
 class ClothGrid extends StatelessWidget {
   @override
@@ -19,14 +19,10 @@ class ClothGrid extends StatelessWidget {
         mainAxisSpacing: 10,
       ),
       itemCount: clothes.length,
-      itemBuilder: (_, int index) {
-        final Cloth cloth = clothes[index];
-        return ClothCard(
-          id: cloth.id,
-          name: cloth.name,
-          imgUrl: cloth.imgUrl,
-        );
-      },
+      itemBuilder: (_, int index) => ChangeNotifierProvider.value(
+        value: clothes[index],
+        child: ClothCard(),
+      ),
     );
   }
 }

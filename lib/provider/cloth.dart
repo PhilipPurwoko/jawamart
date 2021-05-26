@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 
-class Cloth {
+class Cloth with ChangeNotifier {
   final String id;
   final String name;
   final String desc;
   final String imgUrl;
   final int price;
+  bool isFavorite;
+  bool inCart;
 
   Cloth({
     @required this.id,
@@ -13,6 +15,8 @@ class Cloth {
     @required this.desc,
     @required this.imgUrl,
     @required this.price,
+    this.isFavorite = false,
+    this.inCart = false,
   });
 
   static List<Cloth> fetchData() {
@@ -36,5 +40,15 @@ class Cloth {
         price: 50000,
       ),
     ];
+  }
+
+  void toggleFavorite() {
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
+
+  void toogleCart(){
+    inCart = !inCart;
+    notifyListeners();
   }
 }

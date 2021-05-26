@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../model/cloth.dart';
+import 'cloth.dart';
 
 class ClothesProvider with ChangeNotifier {
   List<Cloth> _clothes = [
@@ -27,7 +27,11 @@ class ClothesProvider with ChangeNotifier {
     return [..._clothes];
   }
 
-  void addCloth(){
+  Cloth findById(String id) {
+    return _clothes.firstWhere((Cloth cloth) => cloth.id == id);
+  }
+
+  void addCloth() {
     // _clothes.add();
     notifyListeners();
   }

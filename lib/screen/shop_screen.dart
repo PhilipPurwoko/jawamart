@@ -10,7 +10,7 @@ class ShopScreen extends StatelessWidget {
         title: Text('Jawa Mart'),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
         child: ClothGrid(),
       ),
     );

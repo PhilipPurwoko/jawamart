@@ -1,38 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/cloth.dart';
 import '../screen/detail_screen.dart';
 
 class ClothCard extends StatelessWidget {
-  final String id;
-  final String name;
-  final String imgUrl;
-
-  ClothCard({
-    @required this.id,
-    @required this.name,
-    @required this.imgUrl,
-  });
-
   @override
   Widget build(BuildContext context) {
+    final Cloth cloth = Provider.of<Cloth>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
         child: GestureDetector(
           onTap: () {
             Navigator.of(context)
-                .pushNamed(DetailScreen.routeName, arguments: id);
+                .pushNamed(DetailScreen.routeName, arguments: cloth.id);
           },
           child: Image.network(
-            imgUrl,
+            cloth.imgUrl,
             fit: BoxFit.cover,
           ),
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black54,
-          leading: Icon(Icons.favorite),
-          trailing: Icon(Icons.shopping_cart),
+          leading: Consumer<Cloth>(
+            builder: (_, cloth, child) => IconButton(
+              icon: Icon(
+                  cloth.isFavorite ? Icons.favorite : Icons.favorite_border),
+              onPressed: () {
+                cloth.toggleFavorite();
+              },
+            ),
+          ),
+          trailing: Consumer<Cloth>(
+            builder: (_, cloth, child) => IconButton(
+              icon: Icon(cloth.inCart
+                  ? Icons.shopping_cart
+                  : Icons.shopping_cart_outlined),
+              onPressed: () {
+                cloth.toogleCart();
+              },
+            ),
+          ),
           title: Text(
-            name,
+            cloth.name,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
