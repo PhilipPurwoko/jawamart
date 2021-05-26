@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/cloth.dart';
 import '../screen/detail_screen.dart';
+import '../provider/clothes_provider.dart';
 
 class ClothCard extends StatelessWidget {
   @override
@@ -31,15 +31,9 @@ class ClothCard extends StatelessWidget {
               },
             ),
           ),
-          trailing: Consumer<Cloth>(
-            builder: (_, cloth, child) => IconButton(
-              icon: Icon(cloth.inCart
-                  ? Icons.shopping_cart
-                  : Icons.shopping_cart_outlined),
-              onPressed: () {
-                cloth.toogleCart();
-              },
-            ),
+          trailing: IconButton(
+            icon: Icon(Icons.add_shopping_cart),
+            onPressed: () {},
           ),
           title: Text(
             cloth.name,

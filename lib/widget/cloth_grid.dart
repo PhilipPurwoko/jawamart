@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'cloth_card.dart';
 import '../provider/clothes_provider.dart';
-import '../provider/cloth.dart';
 
 class ClothGrid extends StatelessWidget {
   @override

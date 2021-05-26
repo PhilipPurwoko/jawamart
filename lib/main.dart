@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'theme.dart';
+// import 'theme.dart';
+import './screen/nav_screen.dart';
 import './screen/detail_screen.dart';
 import './screen/shop_screen.dart';
 import './provider/clothes_provider.dart';
@@ -12,13 +13,18 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ClothesProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ClothesProvider(),
+        )
+      ],
       child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: myTheme,
-        initialRoute: ShopScreen.routeName,
+        title: 'JawaMart',
+        // theme: myTheme,
+        initialRoute: NavScreen.routeName,
         routes: {
+          NavScreen.routeName: (_) => NavScreen(),
           ShopScreen.routeName: (_) => ShopScreen(),
           DetailScreen.routeName: (_) => DetailScreen(),
         },

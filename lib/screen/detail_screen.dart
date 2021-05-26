@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/clothes_provider.dart';
-import '../provider/cloth.dart';
 
 class DetailScreen extends StatelessWidget {
   static final String routeName = '/detail';
@@ -17,14 +16,6 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Detail'),
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.favorite,
-                color: Colors.white,
-              ),
-              onPressed: () {}),
-        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
@@ -90,7 +81,7 @@ class DetailScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.shopping_cart),
+                    Icon(Icons.add_shopping_cart),
                     Text('Add to Cart'),
                   ],
                 ),
