@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CartItem {
   final String id;
+  final String productId;
   final String title;
   final String imgUrl;
   final int qty;
@@ -9,6 +10,7 @@ class CartItem {
 
   CartItem({
     @required this.id,
+    @required this.productId,
     @required this.title,
     @required this.imgUrl,
     @required this.qty,
@@ -46,6 +48,7 @@ class CartProvider with ChangeNotifier {
         productId,
         (CartItem cart) => CartItem(
           id: cart.id,
+          productId: productId,
           title: cart.title,
           imgUrl: cart.imgUrl,
           price: cart.price,
@@ -58,12 +61,18 @@ class CartProvider with ChangeNotifier {
         () => CartItem(
           id: DateTime.now().toString(),
           title: title,
+          productId: productId,
           imgUrl: imgUrl,
           price: price,
           qty: 1,
         ),
       );
     }
+    notifyListeners();
+  }
+
+  void removeFromCart(String id){
+    _cartItems.remove(id);
     notifyListeners();
   }
 }

@@ -16,9 +16,10 @@ class CartScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Text>[
+              children: <Widget>[
                 Text('Total Price'),
                 Text('Rp.${cartProvider.totalPrice.toString()}'),
+                ElevatedButton(onPressed: () {}, child: Text('Checkout'))
               ],
             ),
           ),

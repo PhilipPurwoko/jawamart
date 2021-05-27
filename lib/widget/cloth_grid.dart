@@ -28,8 +28,6 @@ class ClothGrid extends StatelessWidget {
               child: ClothCard(),
             ),
           )
-        : Center(
-            child: Text('Empty'),
-          );
+        : Center(child: Text('Empty'));
   }
 }
