@@ -8,7 +8,7 @@ class ShopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-      child: ClothGrid(),
+      child: ClothGrid(false),
     );
   }
 }

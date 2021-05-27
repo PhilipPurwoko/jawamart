@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../screen/cart_screen.dart';
-import '../screen/shop_screen.dart';
+import './cart_screen.dart';
+import './shop_screen.dart';
+import './favorite_screen.dart';
 
 class NavScreen extends StatefulWidget {
   static String routeName = '/nav';
@@ -13,6 +14,7 @@ class _NavScreenState extends State<NavScreen> {
   int _navigationIndex = 0;
   final List<Widget> _screens = <Widget>[
     ShopScreen(),
+    FavoriteScreen(),
     CartScreen(),
   ];
 
@@ -35,6 +37,10 @@ class _NavScreenState extends State<NavScreen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.store),
               label: 'Shop',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: 'Favorite',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart),

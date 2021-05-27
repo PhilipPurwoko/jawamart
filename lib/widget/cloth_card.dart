@@ -10,6 +10,8 @@ class ClothCard extends StatelessWidget {
     final CartProvider cartProvider =
         Provider.of<CartProvider>(context, listen: false);
     final Cloth cloth = Provider.of<Cloth>(context, listen: false);
+    final ClothesProvider clothesProvider =
+        Provider.of<ClothesProvider>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -32,13 +34,19 @@ class ClothCard extends StatelessWidget {
                   cloth.isFavorite ? Icons.favorite : Icons.favorite_border),
               onPressed: () {
                 cloth.toggleFavorite();
+                clothesProvider.refresh();
               },
             ),
           ),
           trailing: IconButton(
             icon: Icon(Icons.add_shopping_cart),
             onPressed: () {
-              cartProvider.addToCart(cloth.id, cloth.name, cloth.price);
+              cartProvider.addToCart(
+                productId: cloth.id,
+                title: cloth.name,
+                imgUrl: cloth.imgUrl,
+                price: cloth.price,
+              );
             },
           ),
           title: Text(
