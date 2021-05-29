@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import './cart_screen.dart';
 import './shop_screen.dart';
 import './favorite_screen.dart';
+import './cart_screen.dart';
+import './dashboard_screen.dart';
 
 class NavScreen extends StatefulWidget {
   static String routeName = '/nav';
@@ -16,6 +17,7 @@ class _NavScreenState extends State<NavScreen> {
     ShopScreen(),
     FavoriteScreen(),
     CartScreen(),
+    DashboardScreen(),
   ];
 
   @override
@@ -32,6 +34,7 @@ class _NavScreenState extends State<NavScreen> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _navigationIndex,
+          unselectedItemColor: Colors.grey,
           selectedItemColor: Theme.of(context).primaryColor,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -45,6 +48,10 @@ class _NavScreenState extends State<NavScreen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart),
               label: 'Cart',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.dashboard),
+              label: 'Dashboard',
             ),
           ],
           onTap: (int index) {
