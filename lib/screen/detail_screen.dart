@@ -1,21 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/clothes_provider.dart';
+import '../provider/cart_provider.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   static final String routeName = '/detail';
 
   @override
+  _DetailScreenState createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  @override
   Widget build(BuildContext context) {
     String clothId = ModalRoute.of(context).settings.arguments as String;
-    final Cloth cloth = Provider.of<ClothesProvider>(
-      context,
-      listen: false,
-    ).findById(clothId);
+    final CartProvider cartProvider =
+        Provider.of<CartProvider>(context, listen: false);
+    final ClothesProvider clothesProvider =
+        Provider.of<ClothesProvider>(context);
+    final Cloth cloth = clothesProvider.findById(clothId);
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Detail'),
+        actions: [
+          IconButton(
+            icon:
+                Icon(cloth.isFavorite ? Icons.favorite : Icons.favorite_border),
+            onPressed: () {
+              cloth.toggleFavorite();
+              clothesProvider.refresh();
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.add_shopping_cart),
+            onPressed: () {
+              cartProvider.addToCart(
+                productId: cloth.id,
+                title: cloth.name,
+                imgUrl: cloth.imgUrl,
+                price: cloth.price,
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
@@ -77,7 +105,14 @@ class DetailScreen extends StatelessWidget {
               width: double.infinity,
               margin: EdgeInsets.only(top: 10),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  cartProvider.addToCart(
+                    productId: cloth.id,
+                    title: cloth.name,
+                    imgUrl: cloth.imgUrl,
+                    price: cloth.price,
+                  );
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
