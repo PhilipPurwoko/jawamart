@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/clothes_provider.dart';
+import '../screen/add_cloth_screen.dart';
 
 class ManageClothesScreen extends StatelessWidget {
   static final String routeName = '/manage-clothes';
@@ -16,7 +17,9 @@ class ManageClothesScreen extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(AddClothScreen.routeName);
+            },
           ),
         ],
       ),

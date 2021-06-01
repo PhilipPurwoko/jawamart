@@ -6,7 +6,7 @@ import './dashboard_screen.dart';
 
 class NavScreen extends StatefulWidget {
   static String routeName = '/nav';
-  
+
   @override
   _NavScreenState createState() => _NavScreenState();
 }
@@ -27,6 +27,16 @@ class _NavScreenState extends State<NavScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('JawaMart'),
+          actions: <IconButton>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {},
+            ),
+          ],
         ),
         body: IndexedStack(
           index: _navigationIndex,

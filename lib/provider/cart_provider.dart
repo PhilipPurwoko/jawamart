@@ -6,7 +6,7 @@ class Cart {
   final String title;
   final String imgUrl;
   final int qty;
-  final int price;
+  final double price;
 
   Cart({
     @required this.id,
@@ -29,8 +29,8 @@ class CartProvider with ChangeNotifier {
     return _cart.length;
   }
 
-  int get totalPrice {
-    int total = 0;
+  double get totalPrice {
+    double total = 0;
     _cart.forEach((key, cloth) {
       total += cloth.price * cloth.qty;
     });
@@ -41,7 +41,7 @@ class CartProvider with ChangeNotifier {
     String productId,
     String title,
     String imgUrl,
-    int price,
+    double price,
   }) {
     if (_cart.containsKey(productId)) {
       _cart.update(

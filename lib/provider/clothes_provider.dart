@@ -5,7 +5,7 @@ class Cloth with ChangeNotifier {
   final String name;
   final String desc;
   final String imgUrl;
-  final int price;
+  final double price;
   bool isFavorite;
 
   Cloth({
