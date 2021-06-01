@@ -19,7 +19,10 @@ class CartScreen extends StatelessWidget {
               children: <Widget>[
                 Text('Total Price'),
                 Text('Rp.${cartProvider.totalPrice.toString()}'),
-                ElevatedButton(onPressed: () {}, child: Text('Checkout'))
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Checkout'),
+                )
               ],
             ),
           ),

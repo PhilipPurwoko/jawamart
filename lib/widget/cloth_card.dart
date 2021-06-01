@@ -42,7 +42,7 @@ class ClothCard extends StatelessWidget {
             icon: Icon(Icons.add_shopping_cart),
             onPressed: () {
               cartProvider.addToCart(
-                productId: cloth.id,
+                clothId: cloth.id,
                 title: cloth.name,
                 imgUrl: cloth.imgUrl,
                 price: cloth.price,

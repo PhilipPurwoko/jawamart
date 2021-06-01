@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class Cart {
   final String id;
-  final String productId;
+  final String clothId;
   final String title;
   final String imgUrl;
-  final int qty;
   final double price;
+  int qty;
 
   Cart({
     @required this.id,
-    @required this.productId,
+    @required this.clothId,
     @required this.title,
     @required this.imgUrl,
     @required this.qty,
@@ -38,17 +38,17 @@ class CartProvider with ChangeNotifier {
   }
 
   void addToCart({
-    String productId,
+    String clothId,
     String title,
     String imgUrl,
     double price,
   }) {
-    if (_cart.containsKey(productId)) {
+    if (_cart.containsKey(clothId)) {
       _cart.update(
-        productId,
+        clothId,
         (Cart cart) => Cart(
           id: cart.id,
-          productId: productId,
+          clothId: clothId,
           title: cart.title,
           imgUrl: cart.imgUrl,
           price: cart.price,
@@ -57,11 +57,11 @@ class CartProvider with ChangeNotifier {
       );
     } else {
       _cart.putIfAbsent(
-        productId,
+        clothId,
         () => Cart(
           id: DateTime.now().toString(),
           title: title,
-          productId: productId,
+          clothId: clothId,
           imgUrl: imgUrl,
           price: price,
           qty: 1,
@@ -72,7 +72,22 @@ class CartProvider with ChangeNotifier {
   }
 
   void removeFromCart(String id) {
-    _cart.remove(id);
+    if (_cart.keys.contains(id)) {
+      _cart.remove(id);
+      notifyListeners();
+    }
+  }
+
+  void modifyQty(String clothId, bool add) {
+    if (add) {
+      _cart[clothId].qty += 1;
+    } else {
+      if (_cart[clothId].qty - 1 <= 0) {
+        _cart.remove(clothId);
+      } else {
+        _cart[clothId].qty -= 1;
+      }
+    }
     notifyListeners();
   }
 }

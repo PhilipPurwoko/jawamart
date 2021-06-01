@@ -15,7 +15,7 @@ class _AddClothScreenState extends State<AddClothScreen> {
   final TextEditingController _descController = TextEditingController();
   final TextEditingController _imageController = TextEditingController();
 
-  void _saveCloth(ClothesProvider clothesProvider) {
+  void _saveCloth(ClothesProvider clothesProvider, BuildContext ctx) {
     final bool isValid = _form.currentState.validate();
     if (!isValid) {
       return;
@@ -31,6 +31,7 @@ class _AddClothScreenState extends State<AddClothScreen> {
     );
 
     clothesProvider.addCloth(cloth);
+    Navigator.of(ctx).pop();
   }
 
   @override
@@ -44,7 +45,7 @@ class _AddClothScreenState extends State<AddClothScreen> {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-              _saveCloth(clothesProvider);
+              _saveCloth(clothesProvider, context);
             },
           )
         ],
@@ -118,7 +119,7 @@ class _AddClothScreenState extends State<AddClothScreen> {
               ElevatedButton(
                 child: Text('Save Cloth'),
                 onPressed: () {
-                  _saveCloth(clothesProvider);
+                  _saveCloth(clothesProvider, context);
                 },
               ),
             ],

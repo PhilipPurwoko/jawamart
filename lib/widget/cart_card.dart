@@ -8,21 +8,21 @@ class CartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CartProvider cartProvider = Provider.of<CartProvider>(context);
     return Dismissible(
       key: ValueKey(cart.id),
       direction: DismissDirection.startToEnd,
       background: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         alignment: Alignment.centerLeft,
         color: Theme.of(context).errorColor,
-        child: Icon(
+        child: const Icon(
           Icons.delete,
           color: Colors.white,
           size: 34,
         ),
       ),
-      onDismissed: (_) => Provider.of<CartProvider>(context, listen: false)
-          .removeFromCart(cart.productId),
+      onDismissed: (_) => cartProvider.removeFromCart(cart.clothId),
       child: Card(
         elevation: 4,
         child: Padding(
@@ -43,9 +43,19 @@ class CartCard extends StatelessWidget {
               ),
               Column(
                 children: [
-                  IconButton(icon: Icon(Icons.add), onPressed: () {}),
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      cartProvider.modifyQty(cart.clothId, true);
+                    },
+                  ),
                   Text(cart.qty.toString()),
-                  IconButton(icon: Icon(Icons.remove), onPressed: () {}),
+                  IconButton(
+                    icon: const Icon(Icons.remove),
+                    onPressed: () {
+                      cartProvider.modifyQty(cart.clothId, false);
+                    },
+                  ),
                 ],
               ),
             ],

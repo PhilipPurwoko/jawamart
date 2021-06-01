@@ -65,4 +65,9 @@ class ClothesProvider with ChangeNotifier {
     _clothes.add(cloth);
     notifyListeners();
   }
+
+  void deleteCloth(String id) {
+    _clothes.removeWhere((Cloth cloth) => cloth.id == id);
+    notifyListeners();
+  }
 }
