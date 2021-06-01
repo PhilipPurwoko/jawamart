@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../provider/cart_provider.dart';
 
 class CartCard extends StatelessWidget {
-  final CartItem cart;
+  final Cart cart;
   CartCard(this.cart);
 
   @override

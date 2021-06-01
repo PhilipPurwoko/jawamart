@@ -7,7 +7,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CartProvider cartProvider = Provider.of<CartProvider>(context);
-    final List<CartItem> cartItems = cartProvider.cartItems.values.toList();
+    final List<Cart> cart = cartProvider.cart.values.toList();
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: Column(
@@ -23,11 +23,11 @@ class CartScreen extends StatelessWidget {
               ],
             ),
           ),
-          cartItems.isNotEmpty
+          cart.isNotEmpty
               ? Expanded(
                   child: ListView.builder(
                     itemCount: cartProvider.itemCount,
-                    itemBuilder: (_, int index) => CartCard(cartItems[index]),
+                    itemBuilder: (_, int index) => CartCard(cart[index]),
                   ),
                 )
               : Text('No Item')

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import './screen/nav_screen.dart';
 import './screen/detail_screen.dart';
+import './screen/manage_clothes_screen.dart';
 
 import './provider/cart_provider.dart';
 import './provider/clothes_provider.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         routes: {
           NavScreen.routeName: (_) => NavScreen(),
           DetailScreen.routeName: (_) => DetailScreen(),
+          ManageClothesScreen.routeName: (_) => ManageClothesScreen(),
         },
       ),
     );

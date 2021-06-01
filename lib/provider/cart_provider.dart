@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CartItem {
+class Cart {
   final String id;
   final String productId;
   final String title;
@@ -8,7 +8,7 @@ class CartItem {
   final int qty;
   final int price;
 
-  CartItem({
+  Cart({
     @required this.id,
     @required this.productId,
     @required this.title,
@@ -19,20 +19,20 @@ class CartItem {
 }
 
 class CartProvider with ChangeNotifier {
-  Map<String, CartItem> _cartItems = {};
+  Map<String, Cart> _cart = {};
 
-  Map<String, CartItem> get cartItems {
-    return {..._cartItems};
+  Map<String, Cart> get cart {
+    return {..._cart};
   }
 
   int get itemCount {
-    return _cartItems.length;
+    return _cart.length;
   }
 
   int get totalPrice {
     int total = 0;
-    _cartItems.forEach((key, cartItem) {
-      total += cartItem.price * cartItem.qty;
+    _cart.forEach((key, cloth) {
+      total += cloth.price * cloth.qty;
     });
     return total;
   }
@@ -43,10 +43,10 @@ class CartProvider with ChangeNotifier {
     String imgUrl,
     int price,
   }) {
-    if (_cartItems.containsKey(productId)) {
-      _cartItems.update(
+    if (_cart.containsKey(productId)) {
+      _cart.update(
         productId,
-        (CartItem cart) => CartItem(
+        (Cart cart) => Cart(
           id: cart.id,
           productId: productId,
           title: cart.title,
@@ -56,9 +56,9 @@ class CartProvider with ChangeNotifier {
         ),
       );
     } else {
-      _cartItems.putIfAbsent(
+      _cart.putIfAbsent(
         productId,
-        () => CartItem(
+        () => Cart(
           id: DateTime.now().toString(),
           title: title,
           productId: productId,
@@ -71,8 +71,8 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeFromCart(String id){
-    _cartItems.remove(id);
+  void removeFromCart(String id) {
+    _cart.remove(id);
     notifyListeners();
   }
 }

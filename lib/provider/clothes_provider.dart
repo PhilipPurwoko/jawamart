@@ -45,7 +45,7 @@ class ClothesProvider with ChangeNotifier {
     ),
   ];
 
-  void refresh(){
+  void refresh() {
     notifyListeners();
   }
 
