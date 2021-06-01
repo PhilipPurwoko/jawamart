@@ -62,7 +62,13 @@ class ClothesProvider with ChangeNotifier {
   }
 
   void addCloth(Cloth cloth) {
-    _clothes.add(cloth);
+    final existingClothIndex =
+        _clothes.indexWhere((Cloth clh) => clh.id == cloth.id);
+    if (existingClothIndex == -1) {
+      _clothes.add(cloth);
+    } else {
+      _clothes[existingClothIndex] = cloth;
+    }
     notifyListeners();
   }
 

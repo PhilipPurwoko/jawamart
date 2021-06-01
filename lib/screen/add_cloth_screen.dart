@@ -4,16 +4,37 @@ import '../provider/clothes_provider.dart';
 
 class AddClothScreen extends StatefulWidget {
   static final String routeName = '/add-cloth';
+
   @override
   _AddClothScreenState createState() => _AddClothScreenState();
 }
 
 class _AddClothScreenState extends State<AddClothScreen> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  String _id;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _descController = TextEditingController();
-  final TextEditingController _imageController = TextEditingController();
+  final TextEditingController _imgUrlController = TextEditingController();
+
+  void _createPlaceholder(Cloth arg) {
+    if (arg != null) {
+      _id = arg.id;
+      _nameController.text = arg.name;
+      _descController.text = arg.desc;
+      _priceController.text = arg.price.toString();
+      _imgUrlController.text = arg.imgUrl;
+    }
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _priceController.dispose();
+    _descController.dispose();
+    _imgUrlController.dispose();
+    super.dispose();
+  }
 
   void _saveCloth(ClothesProvider clothesProvider, BuildContext ctx) {
     final bool isValid = _form.currentState.validate();
@@ -23,11 +44,11 @@ class _AddClothScreenState extends State<AddClothScreen> {
     _form.currentState.save();
 
     final Cloth cloth = Cloth(
-      id: DateTime.now().toString(),
+      id: _id,
       name: _nameController.text,
       price: double.parse(_priceController.text),
       desc: _descController.text,
-      imgUrl: _imageController.text,
+      imgUrl: _imgUrlController.text,
     );
 
     clothesProvider.addCloth(cloth);
@@ -38,6 +59,9 @@ class _AddClothScreenState extends State<AddClothScreen> {
   Widget build(BuildContext context) {
     final ClothesProvider clothesProvider =
         Provider.of<ClothesProvider>(context, listen: false);
+    Cloth arg = ModalRoute.of(context).settings.arguments;
+    _createPlaceholder(arg);
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Cloth'),
@@ -101,7 +125,7 @@ class _AddClothScreenState extends State<AddClothScreen> {
                 },
               ),
               TextFormField(
-                controller: _imageController,
+                controller: _imgUrlController,
                 decoration: InputDecoration(labelText: 'Image Url'),
                 textInputAction: TextInputAction.done,
                 validator: (String url) {
