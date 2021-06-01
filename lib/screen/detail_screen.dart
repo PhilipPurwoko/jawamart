@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/clothes_provider.dart';
 import '../provider/cart_provider.dart';
+import '../widget/available_size.dart';
 
 class DetailScreen extends StatefulWidget {
   static final String routeName = '/detail';
@@ -33,7 +34,7 @@ class _DetailScreenState extends State<DetailScreen> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.add_shopping_cart),
+            icon: const Icon(Icons.add_shopping_cart),
             onPressed: () {
               cartProvider.addToCart(
                 productId: cloth.id,
@@ -46,12 +47,12 @@ class _DetailScreenState extends State<DetailScreen> {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Image.network(cloth.imgUrl),
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -70,40 +71,13 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               child: Text(cloth.desc),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Available Size',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: Row(
-                      children: ['S', 'M', 'L', 'XL']
-                          .map((size) => Container(
-                                color: Theme.of(context).highlightColor,
-                                child: Text(
-                                  size,
-                                  style: TextStyle(
-                                      color: Theme.of(context).accentColor),
-                                ),
-                                padding: EdgeInsets.all(15),
-                              ))
-                          .toList(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            AvailableSize(),
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               child: ElevatedButton(
                 onPressed: () {
                   cartProvider.addToCart(
@@ -116,8 +90,8 @@ class _DetailScreenState extends State<DetailScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.add_shopping_cart),
-                    Text('Add to Cart'),
+                    const Icon(Icons.add_shopping_cart),
+                    const Text('Add to Cart'),
                   ],
                 ),
               ),

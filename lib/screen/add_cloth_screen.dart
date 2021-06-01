@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/clothes_provider.dart';
 
 class AddClothScreen extends StatefulWidget {
   static final String routeName = '/add-cloth';
@@ -8,24 +10,42 @@ class AddClothScreen extends StatefulWidget {
 
 class _AddClothScreenState extends State<AddClothScreen> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _descController = TextEditingController();
+  final TextEditingController _imageController = TextEditingController();
 
-  void _saveCloth() {
+  void _saveCloth(ClothesProvider clothesProvider) {
     final bool isValid = _form.currentState.validate();
     if (!isValid) {
       return;
     }
     _form.currentState.save();
+
+    final Cloth cloth = Cloth(
+      id: DateTime.now().toString(),
+      name: _nameController.text,
+      price: double.parse(_priceController.text),
+      desc: _descController.text,
+      imgUrl: _imageController.text,
+    );
+
+    clothesProvider.addCloth(cloth);
   }
 
   @override
   Widget build(BuildContext context) {
+    final ClothesProvider clothesProvider =
+        Provider.of<ClothesProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Cloth'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
-            onPressed: _saveCloth,
+            onPressed: () {
+              _saveCloth(clothesProvider);
+            },
           )
         ],
       ),
@@ -36,6 +56,7 @@ class _AddClothScreenState extends State<AddClothScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                controller: _nameController,
                 decoration: InputDecoration(labelText: 'Name'),
                 textInputAction: TextInputAction.next,
                 validator: (String name) {
@@ -46,6 +67,7 @@ class _AddClothScreenState extends State<AddClothScreen> {
                 },
               ),
               TextFormField(
+                controller: _priceController,
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
@@ -61,6 +83,7 @@ class _AddClothScreenState extends State<AddClothScreen> {
                 },
               ),
               TextFormField(
+                controller: _descController,
                 decoration: InputDecoration(labelText: 'Description'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.multiline,
@@ -77,6 +100,7 @@ class _AddClothScreenState extends State<AddClothScreen> {
                 },
               ),
               TextFormField(
+                controller: _imageController,
                 decoration: InputDecoration(labelText: 'Image Url'),
                 textInputAction: TextInputAction.done,
                 validator: (String url) {
@@ -93,7 +117,9 @@ class _AddClothScreenState extends State<AddClothScreen> {
               ),
               ElevatedButton(
                 child: Text('Save Cloth'),
-                onPressed: _saveCloth,
+                onPressed: () {
+                  _saveCloth(clothesProvider);
+                },
               ),
             ],
           ),

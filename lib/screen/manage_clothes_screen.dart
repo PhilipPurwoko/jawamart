@@ -9,7 +9,7 @@ class ManageClothesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ClothesProvider clothesProvider =
-        Provider.of<ClothesProvider>(context, listen: false);
+        Provider.of<ClothesProvider>(context);
     final List<Cloth> clothes = clothesProvider.clothes;
     return Scaffold(
       appBar: AppBar(

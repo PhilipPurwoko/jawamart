@@ -60,4 +60,9 @@ class ClothesProvider with ChangeNotifier {
   Cloth findById(String id) {
     return _clothes.firstWhere((Cloth cloth) => cloth.id == id);
   }
+
+  void addCloth(Cloth cloth) {
+    _clothes.add(cloth);
+    notifyListeners();
+  }
 }
