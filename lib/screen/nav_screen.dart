@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/clothes_provider.dart';
 import './shop_screen.dart';
 import './favorite_screen.dart';
 import './cart_screen.dart';
@@ -19,6 +21,12 @@ class _NavScreenState extends State<NavScreen> {
     CartScreen(),
     DashboardScreen(),
   ];
+
+  @override
+  void initState() {
+    Provider.of<ClothesProvider>(context, listen: false).fetchData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
