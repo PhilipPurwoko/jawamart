@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Cloth with ChangeNotifier {
   final String id;
@@ -20,6 +22,15 @@ class Cloth with ChangeNotifier {
   void toggleFavorite() {
     isFavorite = !isFavorite;
     notifyListeners();
+  }
+
+  static String toJSON(Cloth cloth) {
+    return json.encode({
+      'name': cloth.name,
+      'price': cloth.price,
+      'desc': cloth.desc,
+      'imgUrl': cloth.imgUrl,
+    });
   }
 }
 
@@ -61,15 +72,24 @@ class ClothesProvider with ChangeNotifier {
     return _clothes.firstWhere((Cloth cloth) => cloth.id == id);
   }
 
-  void addCloth(Cloth cloth) {
-    final existingClothIndex =
-        _clothes.indexWhere((Cloth clh) => clh.id == cloth.id);
-    if (existingClothIndex == -1) {
-      _clothes.add(cloth);
-    } else {
-      _clothes[existingClothIndex] = cloth;
+  Future<void> addCloth(Cloth cloth) async {
+    try {
+      final Uri url = Uri.parse(
+          'https://jawamart-5604a-default-rtdb.asia-southeast1.firebasedatabase.app/clothes.json');
+      final existingClothIndex =
+          _clothes.indexWhere((Cloth clh) => clh.id == cloth.id);
+
+      if (existingClothIndex == -1) {
+        await http.post(url, body: Cloth.toJSON(cloth));
+        _clothes.add(cloth);
+      } else {
+        _clothes[existingClothIndex] = cloth;
+      }
+
+      notifyListeners();
+    } catch (e) {
+      throw (e);
     }
-    notifyListeners();
   }
 
   void deleteCloth(String id) {
