@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../screen/add_cloth_screen.dart';
 import '../provider/cart_provider.dart';
 import '../provider/clothes_provider.dart';
+import '../screen/add_cloth_screen.dart';
 
 class ClothTile extends StatelessWidget {
+  const ClothTile(this.cloth);
+
   final Cloth cloth;
-  ClothTile(this.cloth);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class ClothTile extends StatelessWidget {
     return ListTile(
       leading: Image.network(cloth.imgUrl),
       title: Text(cloth.name),
-      trailing: Container(
+      trailing: SizedBox(
         width: 100,
         child: Row(
           children: <IconButton>[

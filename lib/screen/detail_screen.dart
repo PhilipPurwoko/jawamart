@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/clothes_provider.dart';
 import '../provider/cart_provider.dart';
+import '../provider/clothes_provider.dart';
 import '../widget/available_size.dart';
 
 class DetailScreen extends StatefulWidget {
-  static final String routeName = '/detail';
+  static const String routeName = '/detail';
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -14,17 +14,18 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
-    String clothId = ModalRoute.of(context).settings.arguments as String;
+    final String? clothId =
+        ModalRoute.of(context)!.settings.arguments as String?;
     final CartProvider cartProvider =
         Provider.of<CartProvider>(context, listen: false);
     final ClothesProvider clothesProvider =
         Provider.of<ClothesProvider>(context);
-    final Cloth cloth = clothesProvider.findById(clothId);
+    final Cloth cloth = clothesProvider.findById(clothId!);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail'),
-        actions: [
+        title: const Text('Detail'),
+        actions: <IconButton>[
           IconButton(
             icon:
                 Icon(cloth.isFavorite ? Icons.favorite : Icons.favorite_border),
@@ -49,22 +50,22 @@ class _DetailScreenState extends State<DetailScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
-          children: [
+          children: <Widget>[
             Image.network(cloth.imgUrl),
             Container(
               margin: const EdgeInsets.only(top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: <Text>[
                   Text(
-                    cloth.name.toString(),
+                    cloth.name,
                     style: Theme.of(context).textTheme.headline5,
                   ),
                   Text(
                     'Rp. ${cloth.price.toString()}',
                     style: Theme.of(context)
                         .textTheme
-                        .headline6
+                        .headline6!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -89,9 +90,9 @@ class _DetailScreenState extends State<DetailScreen> {
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.add_shopping_cart),
-                    const Text('Add to Cart'),
+                  children: const <Widget>[
+                    Icon(Icons.add_shopping_cart),
+                    Text('Add to Cart'),
                   ],
                 ),
               ),

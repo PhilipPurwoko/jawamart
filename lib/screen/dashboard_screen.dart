@@ -9,20 +9,20 @@ class DashboardScreen extends StatelessWidget {
       child: ListView(
         children: <ListTile>[
           ListTile(
-            leading: Icon(Icons.local_shipping),
-            title: Text('My Order'),
+            leading: const Icon(Icons.local_shipping),
+            title: const Text('My Order'),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.list_alt),
-            title: Text('Manage Clothes'),
+            leading: const Icon(Icons.list_alt),
+            title: const Text('Manage Clothes'),
             onTap: () {
               Navigator.of(context).pushNamed(ManageClothesScreen.routeName);
             },
           ),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            leading: const Icon(Icons.settings),
+            title: const Text('Settings'),
             onTap: () {},
           ),
         ],

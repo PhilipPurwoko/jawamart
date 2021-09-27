@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../provider/clothes_provider.dart';
 
 class AddClothScreen extends StatefulWidget {
-  static final String routeName = '/add-cloth';
+  static const String routeName = '/add-cloth';
 
   @override
   _AddClothScreenState createState() => _AddClothScreenState();
@@ -12,20 +12,18 @@ class AddClothScreen extends StatefulWidget {
 class _AddClothScreenState extends State<AddClothScreen> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   bool _isLoading = false;
-  String _id;
+  late String _id;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _descController = TextEditingController();
   final TextEditingController _imgUrlController = TextEditingController();
 
   void _createPlaceholder(Cloth arg) {
-    if (arg != null) {
-      _id = arg.id;
-      _nameController.text = arg.name;
-      _descController.text = arg.desc;
-      _priceController.text = arg.price.toString();
-      _imgUrlController.text = arg.imgUrl;
-    }
+    _id = arg.id;
+    _nameController.text = arg.name;
+    _descController.text = arg.desc;
+    _priceController.text = arg.price.toString();
+    _imgUrlController.text = arg.imgUrl;
   }
 
   @override
@@ -44,11 +42,11 @@ class _AddClothScreenState extends State<AddClothScreen> {
   }
 
   void _saveCloth(ClothesProvider clothesProvider, BuildContext ctx) {
-    final bool isValid = _form.currentState.validate();
+    final bool isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
     }
-    _form.currentState.save();
+    _form.currentState!.save();
     _toggleLoading();
 
     final Cloth cloth = Cloth(
@@ -62,19 +60,19 @@ class _AddClothScreenState extends State<AddClothScreen> {
     clothesProvider.addCloth(cloth).then((_) {
       _toggleLoading();
       Navigator.of(ctx).pop();
-    }).catchError((error) {
+    }).catchError((dynamic error) {
       showDialog(
         context: ctx,
         builder: (BuildContext bc) => AlertDialog(
-          title: Text('Error'),
-          content: Text('Server or Network error'),
-          actions: [
+          title: const Text('Error'),
+          content: const Text('Server or Network error'),
+          actions: <TextButton>[
             TextButton(
               onPressed: () {
                 _toggleLoading();
                 Navigator.of(bc).pop();
               },
-              child: Text('Close'),
+              child: const Text('Close'),
             )
           ],
         ),
@@ -86,15 +84,15 @@ class _AddClothScreenState extends State<AddClothScreen> {
   Widget build(BuildContext context) {
     final ClothesProvider clothesProvider =
         Provider.of<ClothesProvider>(context, listen: false);
-    Cloth arg = ModalRoute.of(context).settings.arguments;
-    _createPlaceholder(arg);
+    final Cloth? arg = ModalRoute.of(context)!.settings.arguments as Cloth?;
+    _createPlaceholder(arg!);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Cloth'),
-        actions: [
+        title: const Text('Add Cloth'),
+        actions: <IconButton>[
           IconButton(
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
             onPressed: () {
               _saveCloth(clothesProvider, context);
             },
@@ -102,7 +100,7 @@ class _AddClothScreenState extends State<AddClothScreen> {
         ],
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: Form(
@@ -111,10 +109,10 @@ class _AddClothScreenState extends State<AddClothScreen> {
                   children: <Widget>[
                     TextFormField(
                       controller: _nameController,
-                      decoration: InputDecoration(labelText: 'Name'),
+                      decoration: const InputDecoration(labelText: 'Name'),
                       textInputAction: TextInputAction.next,
-                      validator: (String name) {
-                        if (name.isEmpty) {
+                      validator: (String? name) {
+                        if (name == null || name.isEmpty) {
                           return 'Name cannot be empty';
                         }
                         return null;
@@ -122,11 +120,11 @@ class _AddClothScreenState extends State<AddClothScreen> {
                     ),
                     TextFormField(
                       controller: _priceController,
-                      decoration: InputDecoration(labelText: 'Price'),
+                      decoration: const InputDecoration(labelText: 'Price'),
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
-                      validator: (String price) {
-                        if (price.isEmpty) {
+                      validator: (String? price) {
+                        if (price == null || price.isEmpty) {
                           return 'Price cannot be empty';
                         } else if (double.tryParse(price) == null) {
                           return 'Price number is not valid';
@@ -138,12 +136,13 @@ class _AddClothScreenState extends State<AddClothScreen> {
                     ),
                     TextFormField(
                       controller: _descController,
-                      decoration: InputDecoration(labelText: 'Description'),
+                      decoration:
+                          const InputDecoration(labelText: 'Description'),
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.multiline,
                       maxLines: 3,
-                      validator: (String desc) {
-                        if (desc.isEmpty) {
+                      validator: (String? desc) {
+                        if (desc == null || desc.isEmpty) {
                           return 'Description cannot be empty';
                         } else if (desc.length <= 200) {
                           return 'Description is too short (Minimum 200 character)';
@@ -155,10 +154,10 @@ class _AddClothScreenState extends State<AddClothScreen> {
                     ),
                     TextFormField(
                       controller: _imgUrlController,
-                      decoration: InputDecoration(labelText: 'Image Url'),
+                      decoration: const InputDecoration(labelText: 'Image Url'),
                       textInputAction: TextInputAction.done,
-                      validator: (String url) {
-                        if (url.isEmpty) {
+                      validator: (String? url) {
+                        if (url == null || url.isEmpty) {
                           return 'URL cannot be empty';
                         } else if (!url.startsWith('http') &&
                             !url.endsWith('.png') &&
@@ -170,7 +169,7 @@ class _AddClothScreenState extends State<AddClothScreen> {
                       },
                     ),
                     ElevatedButton(
-                      child: Text('Save Cloth'),
+                      child: const Text('Save Cloth'),
                       onPressed: () {
                         _saveCloth(clothesProvider, context);
                       },

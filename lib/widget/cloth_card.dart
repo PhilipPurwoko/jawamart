@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../screen/detail_screen.dart';
-import '../provider/clothes_provider.dart';
 import '../provider/cart_provider.dart';
+import '../provider/clothes_provider.dart';
+import '../screen/detail_screen.dart';
 
 class ClothCard extends StatelessWidget {
   @override
@@ -16,22 +16,13 @@ class ClothCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
-        child: GestureDetector(
-          onTap: () {
-            Navigator.of(context)
-                .pushNamed(DetailScreen.routeName, arguments: cloth.id);
-          },
-          child: Image.network(
-            cloth.imgUrl,
-            fit: BoxFit.cover,
-          ),
-        ),
         footer: GridTileBar(
           backgroundColor: Colors.black54,
           leading: Consumer<Cloth>(
-            builder: (_, cloth, child) => IconButton(
+            builder: (_, Cloth cloth, Widget? child) => IconButton(
               icon: Icon(
-                  cloth.isFavorite ? Icons.favorite : Icons.favorite_border),
+                cloth.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
               onPressed: () {
                 cloth.toggleFavorite();
                 clothesProvider.refresh();
@@ -39,7 +30,7 @@ class ClothCard extends StatelessWidget {
             ),
           ),
           trailing: IconButton(
-            icon: Icon(Icons.add_shopping_cart),
+            icon: const Icon(Icons.add_shopping_cart),
             onPressed: () {
               cartProvider.addToCart(
                 clothId: cloth.id,
@@ -52,9 +43,19 @@ class ClothCard extends StatelessWidget {
           title: Text(
             cloth.name,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
             ),
+          ),
+        ),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context)
+                .pushNamed(DetailScreen.routeName, arguments: cloth.id);
+          },
+          child: Image.network(
+            cloth.imgUrl,
+            fit: BoxFit.cover,
           ),
         ),
       ),

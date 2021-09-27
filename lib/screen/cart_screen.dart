@@ -17,23 +17,24 @@ class CartScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('Total Price'),
+                const Text('Total Price'),
                 Text('Rp.${cartProvider.totalPrice.toString()}'),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Text('Checkout'),
+                  child: const Text('Checkout'),
                 )
               ],
             ),
           ),
-          cart.isNotEmpty
-              ? Expanded(
-                  child: ListView.builder(
-                    itemCount: cartProvider.itemCount,
-                    itemBuilder: (_, int index) => CartCard(cart[index]),
-                  ),
-                )
-              : Text('No Item')
+          if (cart.isNotEmpty)
+            Expanded(
+              child: ListView.builder(
+                itemCount: cartProvider.itemCount,
+                itemBuilder: (_, int index) => CartCard(cart[index]),
+              ),
+            )
+          else
+            const Text('No Item')
         ],
       ),
     );

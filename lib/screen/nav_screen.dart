@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/clothes_provider.dart';
-import './shop_screen.dart';
-import './favorite_screen.dart';
 import './cart_screen.dart';
 import './dashboard_screen.dart';
+import './favorite_screen.dart';
+import './shop_screen.dart';
+import '../provider/clothes_provider.dart';
 
 class NavScreen extends StatefulWidget {
   static String routeName = '/nav';
@@ -34,14 +34,14 @@ class _NavScreenState extends State<NavScreen> {
       length: _screens.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('JawaMart'),
+          title: const Text('JawaMart'),
           actions: <IconButton>[
             IconButton(
-              icon: Icon(Icons.search),
+              icon: const Icon(Icons.search),
               onPressed: () {},
             ),
             IconButton(
-              icon: Icon(Icons.settings),
+              icon: const Icon(Icons.settings),
               onPressed: () {},
             ),
           ],

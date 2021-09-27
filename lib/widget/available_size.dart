@@ -7,21 +7,24 @@ class AvailableSize extends StatelessWidget {
       margin: const EdgeInsets.only(top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           const Text('Available Size', style: TextStyle(color: Colors.grey)),
           Container(
             margin: const EdgeInsets.only(top: 10),
             child: Row(
-              children: const ['S', 'M', 'L', 'XL']
-                  .map((size) => Container(
-                        color: Theme.of(context).highlightColor,
-                        child: Text(
-                          size,
-                          style:
-                              TextStyle(color: Theme.of(context).accentColor),
+              children: const <String>['S', 'M', 'L', 'XL']
+                  .map(
+                    (String size) => Container(
+                      color: Theme.of(context).highlightColor,
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        size,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
-                        padding: const EdgeInsets.all(15),
-                      ))
+                      ),
+                    ),
+                  )
                   .toList(),
             ),
           ),

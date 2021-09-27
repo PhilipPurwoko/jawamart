@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'cloth_card.dart';
 import '../provider/clothes_provider.dart';
+import 'cloth_card.dart';
 
 class ClothGrid extends StatelessWidget {
+  const ClothGrid({required this.isFavorite});
+
   final bool isFavorite;
-  ClothGrid(this.isFavorite);
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +15,20 @@ class ClothGrid extends StatelessWidget {
     final List<Cloth> clothes =
         isFavorite ? clothesProvider.favClothes : clothesProvider.clothes;
 
-    return clothes.length > 0
+    return clothes.isNotEmpty
         ? GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 3 / 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
             ),
             itemCount: clothes.length,
-            itemBuilder: (_, int index) => ChangeNotifierProvider.value(
+            itemBuilder: (_, int index) => ChangeNotifierProvider<Cloth>.value(
               value: clothes[index],
               child: ClothCard(),
             ),
           )
-        : Center(child: Text('Empty'));
+        : const Center(child: Text('Empty'));
   }
 }

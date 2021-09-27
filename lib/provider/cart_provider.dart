@@ -1,47 +1,38 @@
 import 'package:flutter/material.dart';
 
 class Cart {
+  Cart({
+    required this.id,
+    required this.clothId,
+    required this.title,
+    required this.imgUrl,
+    required this.qty,
+    required this.price,
+  });
+
   final String id;
   final String clothId;
   final String title;
   final String imgUrl;
   final double price;
   int qty;
-
-  Cart({
-    @required this.id,
-    @required this.clothId,
-    @required this.title,
-    @required this.imgUrl,
-    @required this.qty,
-    @required this.price,
-  });
 }
 
 class CartProvider with ChangeNotifier {
-  Map<String, Cart> _cart = {};
+  final Map<String, Cart> _cart = <String, Cart>{};
 
-  Map<String, Cart> get cart {
-    return {..._cart};
-  }
+  Map<String, Cart> get cart => _cart;
+  int get itemCount => _cart.length;
 
-  int get itemCount {
-    return _cart.length;
-  }
-
-  double get totalPrice {
-    double total = 0;
-    _cart.forEach((key, cloth) {
-      total += cloth.price * cloth.qty;
-    });
-    return total;
-  }
+  double get totalPrice => _cart.values
+      .map((Cart cart) => cart.price)
+      .reduce((double a, double b) => a + b);
 
   void addToCart({
-    String clothId,
-    String title,
-    String imgUrl,
-    double price,
+    required String clothId,
+    required String title,
+    required String imgUrl,
+    required double price,
   }) {
     if (_cart.containsKey(clothId)) {
       _cart.update(
@@ -78,16 +69,18 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-  void modifyQty(String clothId, bool add) {
-    if (add) {
-      _cart[clothId].qty += 1;
-    } else {
-      if (_cart[clothId].qty - 1 <= 0) {
-        _cart.remove(clothId);
+  void modifyQty(String clothId, {required bool isAdding}) {
+    if (_cart[clothId] != null) {
+      if (isAdding) {
+        _cart[clothId]!.qty += 1;
       } else {
-        _cart[clothId].qty -= 1;
+        if (_cart[clothId]!.qty - 1 <= 0) {
+          _cart.remove(clothId);
+        } else {
+          _cart[clothId]!.qty -= 1;
+        }
       }
+      notifyListeners();
     }
-    notifyListeners();
   }
 }

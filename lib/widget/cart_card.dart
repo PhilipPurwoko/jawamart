@@ -3,14 +3,15 @@ import 'package:provider/provider.dart';
 import '../provider/cart_provider.dart';
 
 class CartCard extends StatelessWidget {
+  const CartCard(this.cart);
+
   final Cart cart;
-  CartCard(this.cart);
 
   @override
   Widget build(BuildContext context) {
     final CartProvider cartProvider = Provider.of<CartProvider>(context);
     return Dismissible(
-      key: ValueKey(cart.id),
+      key: ValueKey<String>(cart.id),
       direction: DismissDirection.startToEnd,
       background: Container(
         padding: const EdgeInsets.all(20),
@@ -30,30 +31,32 @@ class CartCard extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Flexible(child: Image.network(cart.imgUrl)),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(cart.title,
-                        style: Theme.of(context).textTheme.headline6),
+                  children: <Text>[
+                    Text(
+                      cart.title,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                     Text('Rp.${cart.price.toString()}'),
                   ],
                 ),
               ),
               Column(
-                children: [
+                children: <Widget>[
                   IconButton(
                     icon: const Icon(Icons.add),
                     onPressed: () {
-                      cartProvider.modifyQty(cart.clothId, true);
+                      cartProvider.modifyQty(cart.clothId, isAdding: true);
                     },
                   ),
                   Text(cart.qty.toString()),
                   IconButton(
                     icon: const Icon(Icons.remove),
                     onPressed: () {
-                      cartProvider.modifyQty(cart.clothId, false);
+                      cartProvider.modifyQty(cart.clothId, isAdding: false);
                     },
                   ),
                 ],
